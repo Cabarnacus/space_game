@@ -2,7 +2,7 @@ import pygame, os
 pygame.font.init()
 pygame.mixer.init()
 
-WIDTH, HEIGHT = 900, 500
+WIDTH, HEIGHT = 1800, 1000
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 45, 55
 
 WHITE = (255, 255, 255)
@@ -12,8 +12,8 @@ YELLOW = (255, 255, 0)
 
 FPS = 60
 VEL = 5
-BULLET_VEL = 7
-MAX_BULLETS = 3
+BULLET_VEL = 10
+MAX_BULLETS = 5
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Game")
@@ -108,7 +108,7 @@ def red_movement_handle(keys, red):
 
 def main():
     yellow = pygame.Rect(200, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
-    red = pygame.Rect((700 - SPACESHIP_WIDTH), 300, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+    red = pygame.Rect(WIDTH - 200 - SPACESHIP_WIDTH, HEIGHT - SPACESHIP_HEIGHT - 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
 
     yellow_bullets = []
     red_bullets = []
@@ -122,15 +122,15 @@ def main():
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                quit()
             
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LCTRL and len(yellow_bullets) < 3:
+                if event.key == pygame.K_LCTRL and len(yellow_bullets) < MAX_BULLETS:
                     bullet = pygame.Rect(yellow.x + SPACESHIP_WIDTH - 15, yellow.y + SPACESHIP_HEIGHT//2, 10, 5)
                     yellow_bullets.append(bullet)
                     FIRE_SOUND.play()
 
-                if event.key == pygame.K_RCTRL and len(red_bullets) < 3:
+                if event.key == pygame.K_RCTRL and len(red_bullets) < MAX_BULLETS:
                     bullet = pygame.Rect(red.x + 5, red.y + SPACESHIP_HEIGHT//2, 10, 5)
                     red_bullets.append(bullet)
                     FIRE_SOUND.play()                    
